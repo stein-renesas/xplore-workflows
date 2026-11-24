@@ -1,0 +1,19 @@
+name: sbb-validation
+run-name: Validate SBB directory structure
+on: workflow_call
+defaults:
+  run:
+    shell: bash
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v7
+      - name: Get the script
+        run: |
+          curl -sSL https://raw.githubusercontent.com/stein-renesas/xplore/refs/heads/main/.github/scripts/validate-sbb-directory.sh -o validate-sbb-directory.sh
+          chmod +x ./validate-sbb-directory.sh
+      - name: Check file/directory structure of repo
+        run: |
+          ./validate-sbb-directory.sh $PWD
